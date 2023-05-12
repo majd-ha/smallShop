@@ -41,7 +41,7 @@ export default function ProductDetails() {
   return (
     <div className="w-[90%] mx-auto">
       <Crumbs />
-      <DetailsCard product={data.data} />
+      <DetailsCard product={data.data} incart={false} />
     </div>
   );
 }

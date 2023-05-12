@@ -5,7 +5,6 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 
-import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import ProductsLayout from "./layoutes/ProductsLayout";
@@ -19,8 +18,6 @@ import ProductDetails from "./pages/ProductDetails";
 import Products from "./pages/Products";
 
 function App() {
-  const [cartItems, setCartItem] = useState([]);
-
   const querClient = new QueryClient();
 
   const router = createBrowserRouter(
@@ -28,15 +25,10 @@ function App() {
       <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
         <Route index element={<Home />} />
         <Route path="products" element={<ProductsLayout />}>
-          <Route
-            index
-            element={
-              <Products cartItems={cartItems} setCartItem={setCartItem} />
-            }
-          />
+          <Route index element={<Products />} />
           <Route path=":productid" element={<ProductDetails />} />
         </Route>
-        <Route path="cart" element={<Cart cartItems={cartItems} />} />
+        <Route path="cart" element={<Cart />} />
         <Route path="offers" element={<Offers />} />
         <Route path="*" element={<NotFound />} />
       </Route>

@@ -4,7 +4,7 @@ import Card from "../components/Card";
 import Categories from "../components/Categories";
 import Loader from "../components/Loader";
 import { useFetchAll } from "../hooks/useFetchAll";
-export default function Products({ cartItems, setCartItem }) {
+export default function Products() {
   const [currentCategory, setCurrentCategory] = useState("All");
   const { isLoading, data, isError, error } = useFetchAll(currentCategory);
 
@@ -24,14 +24,7 @@ export default function Products({ cartItems, setCartItem }) {
 
       <div className="flex gap-2 flex-wrap mt-5 justify-center">
         {data.map((pro) => {
-          return (
-            <Card
-              key={pro.id}
-              pro={pro}
-              setCartItem={setCartItem}
-              cartItems={cartItems}
-            />
-          );
+          return <Card key={pro.id} pro={pro} />;
         })}
       </div>
     </div>

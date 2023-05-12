@@ -1,6 +1,9 @@
 import React from "react";
-import { BsStarFill, BsStarHalf } from "react-icons/bs";
-export default function DetailsCard({ product }) {
+import { BsFillCartXFill, BsStarFill, BsStarHalf } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { removeItem } from "../redux/cartSlice";
+export default function DetailsCard({ product, incart }) {
+  const dispatch = useDispatch();
   const starsLength = product?.rating?.rate;
   const stars = [1, 2, 3, 4, 5, 6, 78, 9, 10];
   if (starsLength % 1 != 0) {
@@ -11,6 +14,14 @@ export default function DetailsCard({ product }) {
 
   return (
     <div className="border py-3 mt-2 max-w-screen ">
+      {incart && (
+        <p
+          onClick={() => dispatch(removeItem(product.id))}
+          className="w-fit px-3 py-1 float-left"
+        >
+          <BsFillCartXFill size={"2rem"} color="gray" />
+        </p>
+      )}
       <div className="flex gap-3 max-sm:flex-col-reverse items-center min-h-[250px] w-[90%] mx-auto">
         <div>
           <p className="font-bold my-3 max-sm:text-center"> {product?.title}</p>
@@ -37,6 +48,7 @@ export default function DetailsCard({ product }) {
           className=" object-contain overflow-x-hidden h-[90%] rounded-lg aspect-3/2 mr-3 max-sm:mr-0 max-sm:w-[80%]"
         />
       </div>
+
       <p className="w-full p-4 text-green-600 text-center text-2xl">
         {product?.price}$
       </p>

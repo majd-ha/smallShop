@@ -4,26 +4,32 @@ import {
   BsFillCartDashFill,
   BsInfoCircleFill,
 } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { addToCart, removeItem } from "../redux/cartSlice";
 
-export default function Card({ pro, setCartItem, cartItems }) {
+export default function Card({ pro }) {
+  const dispatch = useDispatch();
+  const { items } = useSelector((state) => state.cartItems);
+
   const [show, setShow] = useState(false);
   const addTToCart = () => {
     // checking if element in the cart so remove it (and adjust the icon for the element who removed from cart )
     // this function called when element added or removed from cart
-    const element = cartItems.find((el) => el.id == pro.id);
+    const element = items.find((el) => el.id == pro.id);
     if (element) {
-      const newCart = cartItems.filter((el) => el.id != pro.id);
-      setCartItem(newCart);
+      // const newCart = items.filter((el) => el.id != pro.id);
+      dispatch(removeItem(pro.id));
       setShow(false);
     } else {
-      setCartItem((prev) => [...prev, pro]);
+      dispatch(addToCart(pro));
+
       setShow(true);
     }
   };
   const adjustIcon = () => {
     //here  we just check which element in cart so we can set its icon to show
-    const element = cartItems.find((el) => el.id == pro.id);
+    const element = items.find((el) => el.id == pro.id);
     if (element) {
       setShow(true);
     } else {
